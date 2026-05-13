@@ -16,11 +16,11 @@ const PLATFORM_CONFIG = {
         title: 'CashRush Finance',
         theme: 'cr-theme',
         categories: [
-            'Personal Finance 101', 
-            'Investment Basics', 
-            'Compound Finance', 
-            'Portfolio Diversification', 
-            'Risk & Insurance', 
+            'Personal Finance 101',
+            'Investment Basics',
+            'Compound Finance',
+            'Portfolio Diversification',
+            'Risk & Insurance',
             'Fintech & Digital Payments'
         ]
     },
@@ -29,10 +29,10 @@ const PLATFORM_CONFIG = {
         title: 'MindQuest Wellness',
         theme: 'mq-theme',
         categories: [
-            'Emotional', 
-            'Physical', 
-            'Psychological', 
-            'Social', 
+            'Emotional',
+            'Physical',
+            'Psychological',
+            'Social',
             'General Wellness'
         ]
     }
@@ -42,18 +42,18 @@ async function selectPlatform(platform) {
     currentPlatform = platform;
     document.body.className = PLATFORM_CONFIG[platform].theme;
     document.getElementById('platform-title').textContent = PLATFORM_CONFIG[platform].title;
-    
+
     // Show loading state if needed
     try {
         const response = await fetch(PLATFORM_CONFIG[platform].file);
         allQuestions = await response.json();
-        
+
         // Populate categories
         const categoryList = document.getElementById('category-list');
         categoryList.innerHTML = '';
-        
+
         const availableCategories = PLATFORM_CONFIG[platform].categories;
-        
+
         availableCategories.forEach(cat => {
             const chip = document.createElement('div');
             chip.className = 'chip';
@@ -73,7 +73,7 @@ function toggleCategory(category, element) {
     // Clear previous selection to allow only one category
     const chips = document.querySelectorAll('.chip');
     chips.forEach(c => c.classList.remove('active'));
-    
+
     if (selectedCategories.has(category)) {
         selectedCategories.clear();
     } else {
@@ -85,15 +85,15 @@ function toggleCategory(category, element) {
 
 function startQuiz() {
     const platformCats = PLATFORM_CONFIG[currentPlatform].categories.map(c => c.toLowerCase());
-    
+
     if (selectedCategories.size === 0) {
         // Use all from platform if none selected
-        filteredQuestions = allQuestions.filter(q => 
+        filteredQuestions = allQuestions.filter(q =>
             q.category && platformCats.includes(q.category.toLowerCase())
         );
     } else {
         const selected = Array.from(selectedCategories).map(c => c.toLowerCase());
-        filteredQuestions = allQuestions.filter(q => 
+        filteredQuestions = allQuestions.filter(q =>
             q.category && selected.includes(q.category.toLowerCase())
         );
     }
@@ -105,7 +105,7 @@ function startQuiz() {
 
     // Shuffle and cap at 10
     filteredQuestions = shuffleArray(filteredQuestions).slice(0, 10);
-    
+
     currentQuestionIndex = 0;
     score = 0;
     totalTimeSpent = 0;
@@ -123,10 +123,10 @@ function showQuestion() {
 
     document.getElementById('question-text').textContent = q.question;
     document.getElementById('question-counter').textContent = `Question ${currentQuestionIndex + 1}/${filteredQuestions.length}`;
-    
+
     const progress = ((currentQuestionIndex) / filteredQuestions.length) * 100;
     document.getElementById('progress-bar').style.width = `${progress}%`;
-    
+
     const optionsContainer = document.getElementById('options-container');
     optionsContainer.innerHTML = '';
 
@@ -229,14 +229,14 @@ function showResults() {
     const total = filteredQuestions.length || 1;
     const percent = Math.round((score / total) * 100);
     const avgSpeed = questionsAnswered > 0 ? (totalTimeSpent / questionsAnswered).toFixed(1) : 0;
-    
+
     document.getElementById('final-score').textContent = `${percent}%`;
     document.getElementById('metrics-answered').textContent = `${score}/${total}`;
     document.getElementById('metrics-speed').textContent = `${avgSpeed}s`;
-    
+
     let summary = '';
-    if (percent >= 80) summary = "Excellent! The platform questions are factually consistent and the UI/UX supports rapid comprehension.";
-    else if (percent >= 50) summary = "The platform is functional, but some questions may require refinement in clarity or distractor quality.";
+    if (percent >= 80) summary = "Excellent! The questions are factually consistent.";
+    else if (percent >= 50) summary = "Some questions may require refinement in clarity or distractor quality.";
     else summary = "High failure rate detected. Recommend a full review of the question bank and distractor logic.";
 
     document.getElementById('results-summary').textContent = summary;
