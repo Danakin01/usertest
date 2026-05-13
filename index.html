@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trivia UserTesting | CashRush & MindQuest</title>
+    <meta name="description" content="Professional usertesting platform for financial and wellness trivia questions.">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body>
+    <div class="bg-blob blob-1"></div>
+    <div class="bg-blob blob-2"></div>
+
+    <main class="container" id="app">
+        <!-- Landing View -->
+        <div id="landing-view">
+            <h1>Trivia Testing</h1>
+            <p class="subtitle">Select a platform to begin the quality assurance evaluation</p>
+
+            <div class="platform-select">
+                <div class="card cashrush" onclick="selectPlatform('cashrush')">
+                    <i class="fas fa-money-bill-trend-up" style="color: var(--cr-primary);"></i>
+                    <h2>CashRush</h2>
+                    <p>Financial Literacy & Fintech</p>
+                </div>
+                <div class="card mindquest" onclick="selectPlatform('mindquest')">
+                    <i class="fas fa-brain" style="color: var(--mq-primary);"></i>
+                    <h2>MindQuest</h2>
+                    <p>Psychology & Wellness</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Category View -->
+        <div id="category-view" class="hidden">
+            <h1 id="platform-title">Select Categories</h1>
+            <p class="subtitle">Filter questions by specific focus areas</p>
+
+            <div id="category-list" class="categories">
+                <!-- Categories will be injected here -->
+            </div>
+
+            <div style="display: flex; justify-content: center; gap: 1rem; margin-top: 2rem;">
+                <button class="btn" style="background: rgba(255,255,255,0.1);" onclick="restart()">
+                    <i class="fas fa-chevron-left"></i> Back
+                </button>
+                <button class="btn btn-primary" onclick="startQuiz()">
+                    Start User Test <i class="fas fa-arrow-right"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Quiz View -->
+        <div id="quiz-view" class="hidden">
+            <div class="quiz-header">
+                <span id="question-counter">Question 1/10</span>
+                <div class="progress-container">
+                    <div id="progress-bar" class="progress-bar"></div>
+                </div>
+                <div class="timer" id="timer-display">10s</div>
+                <span id="score-counter">Score: 0</span>
+            </div>
+
+            <div id="question-container">
+                <p class="question-text" id="question-text">Loading question...</p>
+                <div class="options" id="options-container">
+                    <!-- Options will be injected here -->
+                </div>
+            </div>
+
+            <div id="explanation-container" class="explanation-box hidden">
+                <h4 style="margin-bottom: 0.5rem;"><i class="fas fa-circle-info"></i> Explanation</h4>
+                <p id="explanation-text"></p>
+            </div>
+
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 2rem;">
+                <button class="btn" style="background: rgba(255,255,255,0.1);" onclick="restart()">
+                    <i class="fas fa-xmark"></i> Quit
+                </button>
+                <button id="next-btn" class="btn btn-primary hidden" onclick="nextQuestion()">
+                    Next Question <i class="fas fa-chevron-right"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Results View -->
+        <div id="results-view" class="hidden">
+            <h1>Test Completed</h1>
+            <p class="subtitle">Thank you for participating in the user testing session</p>
+
+            <div class="results-card">
+                <div class="score-circle">
+                    <span id="final-score">0</span>%
+                </div>
+                <p id="results-summary" style="margin-bottom: 2rem;"></p>
+                <button class="btn btn-primary" onclick="restart()">
+                    Test Another Platform <i class="fas fa-rotate-left"></i>
+                </button>
+            </div>
+        </div>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
