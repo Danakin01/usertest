@@ -72,10 +72,8 @@
             </div>
 
             <div id="explanation-container" class="explanation-box hidden">
-                <div class="explanation-title">
-                    <i class="fas fa-lightbulb"></i> Insight & Context
-                </div>
-                <p id="explanation-text" class="explanation-text"></p>
+                <h4 style="margin-bottom: 0.75rem; color: #fff;"><i class="fas fa-circle-info"></i> Explanation</h4>
+                <p id="explanation-text" style="color: var(--text-muted); line-height: 1.6;"></p>
             </div>
 
             <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 3rem;">
@@ -132,60 +130,8 @@
                         <p>Your feedback directly impacts the trivia bank's factual integrity.</p>
                     </div>
                     
-                    <div class="form-container" style="background: transparent;">
-                        <form id="qa-feedback-form" onsubmit="submitFeedback(event)">
-                            <div class="form-group">
-                                <label>Factual Accuracy (1-5)</label>
-                                <div class="rating-group">
-                                    <input type="radio" name="factualRating" value="1" id="a1"><label for="a1">1</label>
-                                    <input type="radio" name="factualRating" value="2" id="a2"><label for="a2">2</label>
-                                    <input type="radio" name="factualRating" value="3" id="a3"><label for="a3">3</label>
-                                    <input type="radio" name="factualRating" value="4" id="a4"><label for="a4">4</label>
-                                    <input type="radio" name="factualRating" value="5" id="a5" checked><label for="a5">5</label>
-                                </div>
-                            </div>
-
-                            <div class="form-grid">
-                                <div class="form-group">
-                                    <label>Timing Efficiency</label>
-                                    <select name="timing" required>
-                                        <option value="Too Fast">Too Fast</option>
-                                        <option value="Just Right" selected>Just Right</option>
-                                        <option value="Too Slow">Too Slow</option>
-                                    </select>
-                                </div>
-                                <div class="form-group">
-                                    <label>Question Clarity</label>
-                                    <select name="clarity" required>
-                                        <option value="Unclear">Unclear</option>
-                                        <option value="Clear" selected>Clear</option>
-                                        <option value="Very Clear">Very Clear</option>
-                                    </select>
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <label>Report Factual Errors</label>
-                                <textarea name="errors" placeholder="If any question was factually incorrect, please specify..."></textarea>
-                            </div>
-
-                            <div class="form-group">
-                                <label>General Improvements</label>
-                                <textarea name="suggestions" placeholder="Suggestions for the user experience..."></textarea>
-                            </div>
-
-                            <button type="submit" class="btn btn-primary" style="width: 100%;">
-                                Submit Evaluation <i class="fas fa-paper-plane"></i>
-                            </button>
-                        </form>
-                    </div>
-
-                    <div id="feedback-success" class="hidden">
-                        <div class="success-message">
-                            <i class="fas fa-circle-check" style="font-size: 3rem; color: var(--success); margin-bottom: 1rem;"></i>
-                            <h4>Report Saved Locally</h4>
-                            <p>All metrics and feedback have been stored in evaluation_results.csv</p>
-                        </div>
+                    <div class="form-container">
+                        <iframe src="https://docs.google.com/forms/d/e/1FAIpQLScbWzX0fxFAebHLRxyY1FwKSpg3uvJvv13URg3ZPxopPM5eZw/viewform?embedded=true" width="100%" height="800" frameborder="0" marginheight="0" marginwidth="0">Loading…</iframe>
                     </div>
                 </div>
             </div>
