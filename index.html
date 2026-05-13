@@ -88,17 +88,92 @@
 
         <!-- Results View -->
         <div id="results-view" class="hidden">
-            <h1>Test Completed</h1>
-            <p class="subtitle">Detailed performance analysis and evaluation results</p>
+            <div class="results-layout">
+                <div class="results-main">
+                    <h1>Evaluation Complete</h1>
+                    <p class="subtitle">Session performance and metrics overview</p>
 
-            <div class="results-card">
-                <div class="score-circle">
-                    <span id="final-score">0</span>%
+                    <div class="results-card">
+                        <div class="score-circle">
+                            <span id="final-score">0</span>%
+                        </div>
+                        <p id="results-summary"></p>
+                        
+                        <div class="action-row">
+                            <button class="btn btn-secondary" onclick="restart()">
+                                <i class="fas fa-rotate-left"></i> Retest
+                            </button>
+                            <button class="btn btn-primary" onclick="showFeedback()">
+                                Provide Feedback <i class="fas fa-comment-dots"></i>
+                            </button>
+                        </div>
+                    </div>
                 </div>
-                <p id="results-summary" style="margin-bottom: 3rem; font-size: 1.2rem; color: var(--text-muted);"></p>
-                <button class="btn btn-primary" onclick="restart()">
-                    Test Another Platform <i class="fas fa-rotate-left"></i>
-                </button>
+
+                <div id="feedback-section" class="feedback-card hidden">
+                    <h3><i class="fas fa-clipboard-check"></i> Quality Assurance Feedback</h3>
+                    <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 2rem;">Help us refine the trivia bank by evaluating your experience</p>
+                    
+                    <!-- 
+                        To connect this to your Google Form:
+                        1. Create a Google Form with 5 fields (Rating, Timing, Length, Errors, Suggestions).
+                        2. Get the pre-filled link to find the 'entry.xxxx' IDs for each field.
+                        3. Replace the action URL below and the 'name' attributes of the inputs.
+                    -->
+                    <form id="qa-feedback-form" action="https://docs.google.com/forms/d/e/YOUR_FORM_ID/formResponse" method="POST" onsubmit="submitFeedback(event)">
+                        <div class="form-group">
+                            <label>How would you rate the factual accuracy?</label>
+                            <div class="rating-group">
+                                <input type="radio" name="entry.1" value="1" id="a1"><label for="a1">1</label>
+                                <input type="radio" name="entry.1" value="2" id="a2"><label for="a2">2</label>
+                                <input type="radio" name="entry.1" value="3" id="a3"><label for="a3">3</label>
+                                <input type="radio" name="entry.1" value="4" id="a4"><label for="a4">4</label>
+                                <input type="radio" name="entry.1" value="5" id="a5" checked><label for="a5">5</label>
+                            </div>
+                        </div>
+
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label>Question Timing (10s)</label>
+                                <select name="entry.2" required>
+                                    <option value="Too Fast">Too Fast</option>
+                                    <option value="Just Right" selected>Just Right</option>
+                                    <option value="Too Slow">Too Slow</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Question Length</label>
+                                <select name="entry.3" required>
+                                    <option value="Too Wordy">Too Wordy</option>
+                                    <option value="Perfect" selected>Perfect</option>
+                                    <option value="Too Brief">Too Brief</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Did you notice any specific errors?</label>
+                            <textarea name="entry.4" placeholder="E.g. Question #3 had a typo or wrong answer..."></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label>General Suggestions</label>
+                            <textarea name="entry.5" placeholder="How can we make this better?"></textarea>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary" style="width: 100%;">
+                            Submit Evaluation <i class="fas fa-paper-plane"></i>
+                        </button>
+                    </form>
+                    
+                    <div id="feedback-success" class="hidden">
+                        <div class="success-message">
+                            <i class="fas fa-circle-check" style="font-size: 3rem; color: var(--success); margin-bottom: 1rem;"></i>
+                            <h4>Feedback Submitted</h4>
+                            <p>Thank you for helping us improve the platform.</p>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </main>

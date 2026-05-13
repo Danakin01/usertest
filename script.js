@@ -231,13 +231,63 @@ function restart() {
     selectedCategories.clear();
     switchView('landing-view');
     document.body.className = '';
+    // Reset feedback section
+    document.getElementById('feedback-section').classList.add('hidden');
+    document.getElementById('feedback-success').classList.add('hidden');
+    document.getElementById('qa-feedback-form').classList.remove('hidden');
+}
+
+function showFeedback() {
+    const feedbackSection = document.getElementById('feedback-section');
+    feedbackSection.classList.remove('hidden');
+    feedbackSection.scrollIntoView({ behavior: 'smooth' });
+}
+
+async function submitFeedback(event) {
+    event.preventDefault();
+    const form = event.target;
+    const btn = form.querySelector('button');
+    const formData = new FormData(form);
+    const action = form.getAttribute('action');
+
+    // Simulate submission for demo purposes
+    btn.disabled = true;
+    const originalContent = btn.innerHTML;
+    btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Submitting...';
+
+    try {
+        // If the user has replaced 'YOUR_FORM_ID', attempt real submission
+        if (!action.includes('YOUR_FORM_ID')) {
+            await fetch(action, {
+                method: 'POST',
+                mode: 'no-cors', // Google Forms requires no-cors for AJAX submission
+                body: formData
+            });
+        }
+        
+        // Success state
+        setTimeout(() => {
+            form.classList.add('hidden');
+            document.getElementById('feedback-success').classList.remove('hidden');
+        }, 1200);
+    } catch (error) {
+        console.error('Submission error:', error);
+        btn.disabled = false;
+        btn.innerHTML = originalContent;
+        alert('There was an error submitting your feedback. Please try again.');
+    }
 }
 
 function switchView(viewId) {
     ['landing-view', 'category-view', 'quiz-view', 'results-view'].forEach(id => {
-        document.getElementById(id).classList.add('hidden');
+        const el = document.getElementById(id);
+        if (el) el.classList.add('hidden');
     });
-    document.getElementById(viewId).classList.remove('hidden');
+    const target = document.getElementById(viewId);
+    if (target) {
+        target.classList.remove('hidden');
+        window.scrollTo(0, 0);
+    }
 }
 
 function shuffleArray(array) {
