@@ -67,10 +67,14 @@ async function selectPlatform(platform) {
 }
 
 function toggleCategory(category, element) {
+    // Clear previous selection to allow only one category
+    const chips = document.querySelectorAll('.chip');
+    chips.forEach(c => c.classList.remove('active'));
+    
     if (selectedCategories.has(category)) {
-        selectedCategories.delete(category);
-        element.classList.remove('active');
+        selectedCategories.clear();
     } else {
+        selectedCategories.clear();
         selectedCategories.add(category);
         element.classList.add('active');
     }
@@ -93,8 +97,8 @@ function startQuiz() {
         return;
     }
 
-    // Shuffle and limit to 20 for a quick test
-    filteredQuestions = shuffleArray(filteredQuestions).slice(0, 20);
+    // Shuffle and limit to 10 for a focused test session
+    filteredQuestions = shuffleArray(filteredQuestions).slice(0, 10);
     
     currentQuestionIndex = 0;
     score = 0;

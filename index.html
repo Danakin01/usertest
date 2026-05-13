@@ -18,7 +18,7 @@
         <!-- Landing View -->
         <div id="landing-view">
             <h1>Trivia Testing</h1>
-            <p class="subtitle">Select a platform to begin the quality assurance evaluation</p>
+            <p class="subtitle">Select a platform to begin the questions evaluation</p>
 
             <div class="platform-select">
                 <div class="card cashrush" onclick="selectPlatform('cashrush')">
@@ -43,8 +43,8 @@
                 <!-- Categories will be injected here -->
             </div>
 
-            <div style="display: flex; justify-content: center; gap: 1rem; margin-top: 2rem;">
-                <button class="btn" style="background: rgba(255,255,255,0.1);" onclick="restart()">
+            <div style="display: flex; justify-content: center; gap: 1.5rem; margin-top: 3rem;">
+                <button class="btn btn-secondary" onclick="restart()">
                     <i class="fas fa-chevron-left"></i> Back
                 </button>
                 <button class="btn btn-primary" onclick="startQuiz()">
@@ -56,12 +56,12 @@
         <!-- Quiz View -->
         <div id="quiz-view" class="hidden">
             <div class="quiz-header">
-                <span id="question-counter">Question 1/10</span>
+                <span id="question-counter" class="question-counter">Question 1/10</span>
                 <div class="progress-container">
                     <div id="progress-bar" class="progress-bar"></div>
                 </div>
                 <div class="timer" id="timer-display">10s</div>
-                <span id="score-counter">Score: 0</span>
+                <span id="score-counter" class="hidden">Score: 0</span>
             </div>
 
             <div id="question-container">
@@ -72,12 +72,12 @@
             </div>
 
             <div id="explanation-container" class="explanation-box hidden">
-                <h4 style="margin-bottom: 0.5rem;"><i class="fas fa-circle-info"></i> Explanation</h4>
-                <p id="explanation-text"></p>
+                <h4 style="margin-bottom: 0.75rem; color: #fff;"><i class="fas fa-circle-info"></i> Explanation</h4>
+                <p id="explanation-text" style="color: var(--text-muted); line-height: 1.6;"></p>
             </div>
 
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 2rem;">
-                <button class="btn" style="background: rgba(255,255,255,0.1);" onclick="restart()">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 3rem;">
+                <button class="btn btn-secondary" onclick="restart()">
                     <i class="fas fa-xmark"></i> Quit
                 </button>
                 <button id="next-btn" class="btn btn-primary hidden" onclick="nextQuestion()">
@@ -89,13 +89,13 @@
         <!-- Results View -->
         <div id="results-view" class="hidden">
             <h1>Test Completed</h1>
-            <p class="subtitle">Thank you for participating in the user testing session</p>
+            <p class="subtitle">Detailed performance analysis and evaluation results</p>
 
             <div class="results-card">
                 <div class="score-circle">
                     <span id="final-score">0</span>%
                 </div>
-                <p id="results-summary" style="margin-bottom: 2rem;"></p>
+                <p id="results-summary" style="margin-bottom: 3rem; font-size: 1.2rem; color: var(--text-muted);"></p>
                 <button class="btn btn-primary" onclick="restart()">
                     Test Another Platform <i class="fas fa-rotate-left"></i>
                 </button>
