@@ -6,6 +6,9 @@ let score = 0;
 let selectedCategories = new Set();
 let timerInterval;
 let timeLeft = 10;
+let startTime;
+let totalTimeSpent = 0;
+let questionsAnswered = 0;
 
 const PLATFORM_CONFIG = {
     cashrush: {
@@ -139,6 +142,8 @@ function showQuestion() {
     document.getElementById('next-btn').classList.add('hidden');
 
     startTimer();
+    startTime = Date.now();
+    questionsAnswered++;
 }
 
 function startTimer() {
@@ -173,6 +178,9 @@ function handleTimeout() {
         }
     });
 
+    const timeSpent = (10 - timeLeft);
+    totalTimeSpent += timeSpent;
+
     document.getElementById('explanation-text').textContent = "Time's up! " + q.explanation;
     document.getElementById('explanation-container').classList.remove('hidden');
     document.getElementById('next-btn').classList.remove('hidden');
@@ -180,6 +188,8 @@ function handleTimeout() {
 
 function handleAnswer(selected, correct, element) {
     clearInterval(timerInterval);
+    const timeSpent = (Date.now() - startTime) / 1000;
+    totalTimeSpent += timeSpent;
     const options = document.querySelectorAll('.option');
     options.forEach(opt => opt.style.pointerEvents = 'none');
 
@@ -215,13 +225,18 @@ function nextQuestion() {
 function showResults() {
     switchView('results-view');
     const percent = Math.round((score / filteredQuestions.length) * 100);
-    document.getElementById('final-score').textContent = percent;
+    const avgSpeed = (totalTimeSpent / questionsAnswered).toFixed(1);
+    
+    document.getElementById('final-score').textContent = `${percent}%`;
+    document.getElementById('metrics-answered').textContent = `${score}/${filteredQuestions.length}`;
+    document.getElementById('metrics-speed').textContent = `${avgSpeed}s`;
+    
     document.getElementById('progress-bar').style.width = '100%';
 
     let summary = '';
-    if (percent >= 80) summary = "Excellent! The questions are clear and well-structured.";
-    else if (percent >= 50) summary = "Good progress. Some areas might need further clarification.";
-    else summary = "Testing reveals significant knowledge gaps or potential issues in question clarity.";
+    if (percent >= 80) summary = "Excellent! The platform questions are factually consistent and the UI/UX supports rapid comprehension.";
+    else if (percent >= 50) summary = "The platform is functional, but some questions may require refinement in clarity or distractor quality.";
+    else summary = "High failure rate detected. Recommend a full review of the question bank and distractor logic.";
 
     document.getElementById('results-summary').textContent = summary;
 }
@@ -229,6 +244,8 @@ function showResults() {
 function restart() {
     clearInterval(timerInterval);
     selectedCategories.clear();
+    totalTimeSpent = 0;
+    questionsAnswered = 0;
     switchView('landing-view');
     document.body.className = '';
     // Reset feedback section

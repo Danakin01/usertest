@@ -88,41 +88,51 @@
 
         <!-- Results View -->
         <div id="results-view" class="hidden">
-            <div class="results-layout">
-                <div class="results-main">
-                    <h1>Evaluation Complete</h1>
-                    <p class="subtitle">Session performance and metrics overview</p>
+            <div class="results-container">
+                <div class="results-header">
+                    <h1>Performance Report</h1>
+                    <p class="subtitle">Platform Evaluation Metrics & Feedback</p>
+                </div>
 
-                    <div class="results-card">
-                        <div class="score-circle">
-                            <span id="final-score">0</span>%
-                        </div>
-                        <p id="results-summary"></p>
-                        
-                        <div class="action-row">
-                            <button class="btn btn-secondary" onclick="restart()">
-                                <i class="fas fa-rotate-left"></i> Retest
-                            </button>
-                            <button class="btn btn-primary" onclick="showFeedback()">
-                                Provide Feedback <i class="fas fa-comment-dots"></i>
-                            </button>
-                        </div>
+                <div class="metrics-grid">
+                    <div class="metric-card">
+                        <div class="metric-value" id="final-score">0%</div>
+                        <div class="metric-label">Accuracy Score</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-value" id="metrics-answered">0/10</div>
+                        <div class="metric-label">Questions Answered</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-value" id="metrics-speed">0s</div>
+                        <div class="metric-label">Avg. Speed</div>
                     </div>
                 </div>
 
+                <div class="results-summary-card">
+                    <h3><i class="fas fa-chart-line"></i> Evaluation Summary</h3>
+                    <p id="results-summary"></p>
+                </div>
+
+                <div class="action-row">
+                    <button class="btn btn-secondary" onclick="restart()">
+                        <i class="fas fa-rotate-left"></i> Retest Platform
+                    </button>
+                    <button class="btn btn-primary" onclick="showFeedback()">
+                        Evaluation Feedback <i class="fas fa-chevron-down"></i>
+                    </button>
+                </div>
+
+                <!-- Feedback Section (Slides down) -->
                 <div id="feedback-section" class="feedback-card hidden">
-                    <h3><i class="fas fa-clipboard-check"></i> Quality Assurance Feedback</h3>
-                    <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 2rem;">Help us refine the trivia bank by evaluating your experience</p>
+                    <div class="feedback-header">
+                        <h3><i class="fas fa-clipboard-check"></i> Quality Assurance Form</h3>
+                        <p>Your feedback directly impacts the trivia bank's factual integrity.</p>
+                    </div>
                     
-                    <!-- 
-                        To connect this to your Google Form:
-                        1. Create a Google Form with 5 fields (Rating, Timing, Length, Errors, Suggestions).
-                        2. Get the pre-filled link to find the 'entry.xxxx' IDs for each field.
-                        3. Replace the action URL below and the 'name' attributes of the inputs.
-                    -->
                     <form id="qa-feedback-form" action="https://docs.google.com/forms/d/e/YOUR_FORM_ID/formResponse" method="POST" onsubmit="submitFeedback(event)">
                         <div class="form-group">
-                            <label>How would you rate the factual accuracy?</label>
+                            <label>Factual Accuracy (1-5)</label>
                             <div class="rating-group">
                                 <input type="radio" name="entry.1" value="1" id="a1"><label for="a1">1</label>
                                 <input type="radio" name="entry.1" value="2" id="a2"><label for="a2">2</label>
@@ -134,7 +144,7 @@
 
                         <div class="form-grid">
                             <div class="form-group">
-                                <label>Question Timing (10s)</label>
+                                <label>Timing Efficiency</label>
                                 <select name="entry.2" required>
                                     <option value="Too Fast">Too Fast</option>
                                     <option value="Just Right" selected>Just Right</option>
@@ -142,35 +152,35 @@
                                 </select>
                             </div>
                             <div class="form-group">
-                                <label>Question Length</label>
+                                <label>Question Clarity</label>
                                 <select name="entry.3" required>
-                                    <option value="Too Wordy">Too Wordy</option>
-                                    <option value="Perfect" selected>Perfect</option>
-                                    <option value="Too Brief">Too Brief</option>
+                                    <option value="Unclear">Unclear</option>
+                                    <option value="Clear" selected>Clear</option>
+                                    <option value="Very Clear">Very Clear</option>
                                 </select>
                             </div>
                         </div>
 
                         <div class="form-group">
-                            <label>Did you notice any specific errors?</label>
-                            <textarea name="entry.4" placeholder="E.g. Question #3 had a typo or wrong answer..."></textarea>
+                            <label>Report Factual Errors</label>
+                            <textarea name="entry.4" placeholder="If any question was factually incorrect, please specify..."></textarea>
                         </div>
 
                         <div class="form-group">
-                            <label>General Suggestions</label>
-                            <textarea name="entry.5" placeholder="How can we make this better?"></textarea>
+                            <label>General Improvements</label>
+                            <textarea name="entry.5" placeholder="Suggestions for the user experience..."></textarea>
                         </div>
 
                         <button type="submit" class="btn btn-primary" style="width: 100%;">
-                            Submit Evaluation <i class="fas fa-paper-plane"></i>
+                            Submit Form <i class="fas fa-paper-plane"></i>
                         </button>
                     </form>
                     
                     <div id="feedback-success" class="hidden">
                         <div class="success-message">
                             <i class="fas fa-circle-check" style="font-size: 3rem; color: var(--success); margin-bottom: 1rem;"></i>
-                            <h4>Feedback Submitted</h4>
-                            <p>Thank you for helping us improve the platform.</p>
+                            <h4>Report Submitted</h4>
+                            <p>Thank you for your contribution to the trivia testing phase.</p>
                         </div>
                     </div>
                 </div>
