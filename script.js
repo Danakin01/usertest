@@ -258,6 +258,49 @@ function showFeedback() {
     }
 }
 
+async function submitFeedback(event) {
+    event.preventDefault();
+    const form = event.target;
+    const btn = form.querySelector('button');
+    const formData = new FormData(form);
+    
+    const payload = {
+        platform: currentPlatform,
+        accuracy: document.getElementById('final-score').textContent,
+        answered: document.getElementById('metrics-answered').textContent,
+        avgSpeed: document.getElementById('metrics-speed').textContent,
+        factualRating: formData.get('factualRating'),
+        timing: formData.get('timing'),
+        clarity: formData.get('clarity'),
+        errors: formData.get('errors') || 'None',
+        suggestions: formData.get('suggestions') || 'None'
+    };
+
+    btn.disabled = true;
+    const originalContent = btn.innerHTML;
+    btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Saving to Folder...';
+
+    try {
+        const response = await fetch('http://localhost:3001/save-evaluation', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+        });
+
+        if (response.ok) {
+            form.classList.add('hidden');
+            document.getElementById('feedback-success').classList.remove('hidden');
+        } else {
+            throw new Error('Server error');
+        }
+    } catch (error) {
+        console.error('Submission error:', error);
+        btn.disabled = false;
+        btn.innerHTML = originalContent;
+        alert('Could not connect to the local results server. Please run results_server.js first.');
+    }
+}
+
 function switchView(viewId) {
     const views = ['landing-view', 'category-view', 'quiz-view', 'results-view'];
     views.forEach(id => {
