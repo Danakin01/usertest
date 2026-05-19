@@ -1,0 +1,149 @@
+# Trivia Platform QA Survey — Analysis & Recommendations
+
+**26 responses** collected between May 13–17, 2026 across **CashRush** (17 responses, 65%) and **MindQuest** (8 responses, 31%). 1 response had no platform specified.
+
+---
+
+## Key Findings at a Glance
+
+| Metric | Result | Severity |
+|---|---|---|
+| **Timer too fast** | **77% of users** said 10 seconds is too short | 🔴 Critical |
+| **Question clarity** | 27% found questions confusing | 🟡 Moderate |
+| **Factual accuracy** | 3.7/5 overall rating | 🟡 Moderate |
+| **Difficulty level** | 81% said "Challenging but Fair" | 🟢 Good |
+| **Typos/errors** | No concrete typos reported | 🟢 Good |
+
+---
+
+## 1. Timer Issue — 🔴 THE #1 PROBLEM
+
+> [!CAUTION]
+> **77% of all users (20/26) said the questions are too long for the 10-second timer.** This is the single most critical finding.
+
+### Breakdown by Platform
+
+| Platform | Too Fast | Just Right | Too Slow |
+|---|---|---|---|
+| **CashRush** | **15 / 17 (88%)** | 1 (6%) | 1 (6%) |
+| **MindQuest** | 5 / 8 (63%) | 3 (37%) | 0 (0%) |
+
+### Why This Matters
+- CashRush questions average **130 characters** with **117/180 (65%)** exceeding 120 characters
+- One user explicitly wrote: *"Over 7 out of 10 questions, I could not finish reading the question before the timer ends and there so many calculation questions that 10secs cannot be enough for"*
+- Another said: *"No time. Before you try to understand the system picks an option automatically. I suggest the words should be few and little bit simpler"*
+
+### Recommended Actions
+
+| Priority | Action | Details |
+|---|---|---|
+| 🔴 P0 | **Shorten CashRush questions** | Target ≤ 80–90 characters (MindQuest's average). You already built a [batch question shortener tool](file:///c:/Users/admin/Projects/usertest/script.js) — use it on CashRush. |
+| 🔴 P0 | **Increase timer to 15 seconds** | Even after shortening, bump the timer. 88% CashRush users ran out of time. |
+| 🟡 P1 | **Remove calculation-heavy questions** | Users can't do mental math in 10–15s. Convert "calculate" questions into "which of these" recognition-style questions. |
+| 🟡 P1 | **Add dynamic timer** | Consider making timer scale with question length (e.g., 10s base + 1s per 20 chars over 80). |
+
+---
+
+## 2. Question Clarity — 🟡 NEEDS WORK
+
+### Overall Clarity Distribution
+
+| Rating | Count | % |
+|---|---|---|
+| Very Clear | 4 | 15% |
+| Mostly Clear | 15 | 58% |
+| Somewhat Confusing | 6 | 23% |
+| Very Confusing | 1 | 4% |
+
+### Breakdown by Platform
+
+| Rating | CashRush | MindQuest |
+|---|---|---|
+| Very Clear | 1 (6%) | 3 (37%) |
+| Mostly Clear | 11 (65%) | 3 (37%) |
+| Somewhat Confusing | 4 (24%) | 2 (25%) |
+| Very Confusing | 1 (6%) | 0 (0%) |
+
+> [!IMPORTANT]
+> **CashRush has a clarity problem.** Only 6% rated it "Very Clear" versus 37% for MindQuest. Combined, 30% of CashRush users found questions somewhat-to-very confusing.
+
+### Recommended Actions
+
+| Priority | Action | Details |
+|---|---|---|
+| 🔴 P0 | **Simplify CashRush question language** | Reduce jargon. Replace technical financial terms with plain-English equivalents where possible. |
+| 🟡 P1 | **Review "Somewhat Confusing" question categories** | Focus on the categories that produced the most confusion — likely Investment Basics and Compound Finance. |
+| 🟡 P1 | **Add context hints for technical terms** | Consider a brief tooltip or parenthetical definition for terms like "portfolio diversification" or "compound interest". |
+
+---
+
+## 3. Factual Accuracy — 🟡 DECENT BUT ROOM TO IMPROVE
+
+### Rating Distribution (1–5 scale)
+
+| Rating | CashRush | MindQuest |
+|---|---|---|
+| ⭐ 1 | 1 | 0 |
+| ⭐ 2 | 2 | 0 |
+| ⭐ 3 | 3 | 3 |
+| ⭐ 4 | 5 | 3 |
+| ⭐ 5 | 6 | 2 |
+| **Average** | **3.8 / 5** | **3.9 / 5** |
+
+> [!NOTE]
+> Accuracy is acceptable but not stellar. 3 CashRush users rated accuracy at 1 or 2, suggesting some questions may have incorrect answers or misleading distractors.
+
+### Recommended Actions
+
+| Priority | Action | Details |
+|---|---|---|
+| 🟡 P1 | **Audit low-confidence questions** | Review questions where users scored ≤ 2 on accuracy. Cross-verify correct answers against authoritative sources. |
+| 🟡 P1 | **Improve distractor quality** | Ensure incorrect answers are plausible but clearly wrong — not ambiguous or "technically also correct". |
+
+---
+
+## 4. Difficulty — 🟢 ON TARGET
+
+| Rating | Count | % |
+|---|---|---|
+| Too Easy | 1 | 4% |
+| Challenging but Fair | 21 | 81% |
+| Too Hard/Technical | 4 | 15% |
+
+> [!TIP]
+> 81% "Challenging but Fair" is an excellent result — the difficulty calibration is well-tuned. The 4 "Too Hard" responses are all from users who also cited timer/clarity issues, suggesting the perceived difficulty stems from **presentation**, not content.
+
+---
+
+## 5. Typos & Errors — 🟢 NO ISSUES FOUND
+
+No concrete typos or incorrect answers were reported. The 2 "meaningful" feedback entries focused on question length and timer complaints, not factual errors.
+
+---
+
+## Summary: Prioritized Action Plan
+
+```mermaid
+flowchart TD
+    A["🔴 P0: Shorten CashRush Questions"] --> B["Target ≤ 80-90 chars avg"]
+    A --> C["Remove/convert calculation questions"]
+    D["🔴 P0: Increase Timer"] --> E["10s → 15s minimum"]
+    D --> F["Consider dynamic timer by length"]
+    G["🟡 P1: Improve CashRush Clarity"] --> H["Simplify jargon"]
+    G --> I["Add context for technical terms"]
+    J["🟡 P1: Audit Accuracy"] --> K["Review low-rated questions"]
+    J --> L["Improve distractor quality"]
+```
+
+| # | Priority | Task | Effort |
+|---|---|---|---|
+| 1 | 🔴 P0 | **Shorten CashRush question text** to ≤ 90 chars average | Medium — use your batch shortener tool |
+| 2 | 🔴 P0 | **Increase timer from 10s to 15s** in `script.js` | Trivial — change `timeLeft = 10` to `15` |
+| 3 | 🔴 P0 | **Remove/rewrite calculation-heavy questions** that require mental math | Medium |
+| 4 | 🟡 P1 | **Simplify CashRush language** — reduce jargon, use plain English | Medium |
+| 5 | 🟡 P1 | **Audit accuracy** — verify correct answers for any flagged questions | Low |
+| 6 | 🟢 P2 | **Consider dynamic timer** scaling with question length | Low |
+| 7 | 🟢 P2 | **MindQuest is in good shape** — minor clarity tweaks only | Low |
+
+> [!IMPORTANT]
+> **Bottom line: The questions themselves are well-calibrated for difficulty (81% say "Challenging but Fair") — the problem is that they're too long to read in 10 seconds, especially CashRush.** The fix is a combination of shortening questions and extending the timer.
