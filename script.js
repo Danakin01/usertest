@@ -5,7 +5,7 @@ let currentQuestionIndex = 0;
 let score = 0;
 let selectedCategories = new Set();
 let timerInterval;
-let timeLeft = 10;
+let timeLeft = 15;
 let startTime;
 let totalTimeSpent = 0;
 let questionsAnswered = 0;
@@ -156,7 +156,7 @@ function showQuestion() {
 
 function startTimer() {
     clearInterval(timerInterval);
-    timeLeft = 10;
+    timeLeft = 15;
     const timerDisplay = document.getElementById('timer-display');
     timerDisplay.textContent = `${timeLeft}s`;
     timerDisplay.classList.remove('warning');
@@ -177,7 +177,7 @@ function startTimer() {
 function handleTimeout() {
     const q = filteredQuestions[currentQuestionIndex];
     questionsAnswered++;
-    totalTimeSpent += 10;
+    totalTimeSpent += 15;
 
     const options = document.querySelectorAll('.option');
     options.forEach(opt => {
