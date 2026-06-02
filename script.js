@@ -15,6 +15,7 @@ const PLATFORM_CONFIG = {
         file: 'cashquestions.json',
         title: 'CashRush Finance',
         theme: 'cr-theme',
+        timer: 15,
         categories: [
             'Personal Finance 101',
             'Investment Basics',
@@ -28,6 +29,7 @@ const PLATFORM_CONFIG = {
         file: 'mindquest.json',
         title: 'MindQuest Wellness',
         theme: 'mq-theme',
+        timer: 10,
         categories: [
             'Emotional',
             'Physical',
@@ -156,7 +158,7 @@ function showQuestion() {
 
 function startTimer() {
     clearInterval(timerInterval);
-    timeLeft = 15;
+    timeLeft = PLATFORM_CONFIG[currentPlatform].timer;
     const timerDisplay = document.getElementById('timer-display');
     timerDisplay.textContent = `${timeLeft}s`;
     timerDisplay.classList.remove('warning');
@@ -177,7 +179,7 @@ function startTimer() {
 function handleTimeout() {
     const q = filteredQuestions[currentQuestionIndex];
     questionsAnswered++;
-    totalTimeSpent += 15;
+    totalTimeSpent += PLATFORM_CONFIG[currentPlatform].timer;
 
     const options = document.querySelectorAll('.option');
     options.forEach(opt => {
